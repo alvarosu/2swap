@@ -1,0 +1,78 @@
+// Elements
+.loader {
+    content: url('./../images/loader.svg');
+    margin: 30px auto;
+    width: 48px;
+
+}
+
+.n-up {
+    color: rgb(5, 177, 105);
+}
+
+.n-down {
+    color: rgb(223, 95, 103);
+}
+
+.market-status {
+    margin: 0 0 30px;
+    font-weight: 600;
+
+    &--top {
+        margin: 0 0 10px;
+        color: rgba(17, 51, 83, 0.6);
+        font-size: 14px;
+    }
+
+    &--bottom {
+        margin: 0 0 10px;
+        font-size: 24px;
+    }
+}
+
+@keyframes string-loading {
+    from {
+        transform: translateX(-100%);
+    }
+
+    to {
+        transform: translateX(100%);
+    }
+}
+
+.dropdown-user {
+    color: $primary-color;
+
+    a {
+        color: inherit;
+    }
+
+    .fas {
+        font-size: 32px;
+    }
+}
+
+.string-loading {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    height: 1.4rem;
+
+    &::after {
+        content: '';
+        display: block;
+        height: 100%;
+        width: 100%;
+        background: rgb(255,255,255);
+        background: -moz-linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(190,202,218,1) 50%, rgba(255,255,255,1) 100%);
+        background: -webkit-linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(190,202,218,1) 50%, rgba(255,255,255,1) 100%);
+        background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(190,202,218,1) 50%, rgba(255,255,255,1) 100%);
+        filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#ffffff",GradientType=1);
+
+        animation-name: string-loading;
+        animation-iteration-count: infinite;
+        animation-duration: 800ms;
+
+        opacity: .2;
+    }
+}

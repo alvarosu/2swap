@@ -1,0 +1,38 @@
+html,
+body {
+    @media screen and (min-height: 700px) {
+        height: 100%;
+    }
+}
+
+.page-template-login,
+.page-template-signup {
+    background-color: $color-light-heavy;
+
+    .page-wrap {
+        margin-top: 6vh;
+        padding-top: 40px;
+        padding-bottom: 40px;
+
+        @media screen and (min-height: 900px) {
+            padding-top: 0;
+            padding-bottom: 90px;
+        }
+
+        .form-signin {
+            background-color: #fff;
+            border-radius: 4px;
+            box-shadow: rgb(17 51 83 / 2%) 0px 4px 12px 0px;
+            width: 100%;
+            max-width: 330px;
+            padding: 30px 15px;
+            margin: auto;
+        }
+        
+        .site-branding {
+            img {
+                max-width: 80%;
+            }
+        }
+    }
+}

@@ -1,0 +1,37 @@
+.form-control {
+    background-color: #fff;
+    // font-size: 16px;
+    // line-height: 1.2;
+    color: #333;
+
+    &:disabled,
+    &[readonly] {
+        background-color: inherit;
+    }
+
+    &:focus {
+        background-color: inherit;
+        border-color: $primary-color;
+        outline: 0;
+        box-shadow: none;
+        color: inherit;
+    }
+
+}
+
+.form-select {
+    
+    &:disabled,
+    &[readonly] {
+        background-color: inherit;
+    }
+
+    &:focus {
+        background-color: inherit;
+        border-color: $primary-color;
+        outline: 0;
+        box-shadow: none;
+        color: inherit;
+    }
+    
+}

@@ -1,0 +1,62 @@
+// Buttons
+
+.btn-check:active+.btn-primary:focus,
+.btn-check:checked+.btn-primary:focus,
+.btn-primary.active:focus,
+.btn-primary:active:focus,
+.show>.btn-primary.dropdown-toggle:focus {
+    box-shadow: none;
+}
+
+.btn {
+    &:focus {
+        box-shadow: none;
+    }
+
+    &-outline {
+        &-primary {
+            border-color: $primary-color;
+            color: $primary-color;
+
+            &:active,
+            &:focus,
+            &:hover {
+                outline: none;
+                box-shadow: none;
+                border-color: $secondary-color;
+                background-color: $primary-color;
+                color: #fff;
+            }
+        }
+    }
+
+    &-primary {
+        outline: none;
+        box-shadow: none;
+        border-color: $primary-color;
+        background-color: $primary-color;
+        color: #fff;
+
+        &:active,
+        &:focus,
+        &:hover {
+            outline: none;
+            box-shadow: none;
+            border-color: $primary-color;
+            background-color: #fff;
+            color: $primary-color;
+        }
+    }
+
+    &-link {
+        color: $primary-color;
+        text-decoration: none;
+
+        &:active,
+        &:focus,
+        &:hover {
+            color: $secondary-color;
+            text-decoration: none;
+        }
+    }
+}
