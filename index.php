@@ -36,44 +36,44 @@ $user_wallets = $wallets->getWalletsByUser($current_user['email']);
 						<table class="table table-hover" id="table-trending">
 							<thead>
 								<tr>
-									<th scope="col" width="70">#</th>
-									<th scope="col col-name">Nombre</th>
-									<th scope="col"><span class="d-none d-lg-inline">Posición</span> Market Cap.</th>
+									<th class="index" width="70">#</th>
+									<th class="col-name">Nombre</th>
+									<th class=""><span class="d-none d-lg-inline">Posición</span> Market Cap.</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr class="loading">
-									<th scope="row"><span class="string-loading"></span></th>
+									<th class="row"><span class="string-loading"></span></th>
 									<td class="name"><span class="string-loading"></span></td>
 									<td class="current_price"><span class="string-loading"></span></td>
 								</tr>
 								<tr class="loading">
-									<th scope="row"><span class="string-loading"></span></th>
+									<th class="row"><span class="string-loading"></span></th>
 									<td class="name"><span class="string-loading"></span></td>
 									<td class="current_price"><span class="string-loading"></span></td>
 								</tr>
 								<tr class="loading">
-									<th scope="row"><span class="string-loading"></span></th>
+									<th class="row"><span class="string-loading"></span></th>
 									<td class="name"><span class="string-loading"></span></td>
 									<td class="current_price"><span class="string-loading"></span></td>
 								</tr>
 								<tr class="loading">
-									<th scope="row"><span class="string-loading"></span></th>
+									<th class="row"><span class="string-loading"></span></th>
 									<td class="name"><span class="string-loading"></span></td>
 									<td class="current_price"><span class="string-loading"></span></td>
 								</tr>
 								<tr class="loading">
-									<th scope="row"><span class="string-loading"></span></th>
+									<th class="row"><span class="string-loading"></span></th>
 									<td class="name"><span class="string-loading"></span></td>
 									<td class="current_price"><span class="string-loading"></span></td>
 								</tr>
 								<tr class="loading">
-									<th scope="row"><span class="string-loading"></span></th>
+									<th class="row"><span class="string-loading"></span></th>
 									<td class="name"><span class="string-loading"></span></td>
 									<td class="current_price"><span class="string-loading"></span></td>
 								</tr>
 								<tr class="loading">
-									<th scope="row"><span class="string-loading"></span></th>
+									<th class="row"><span class="string-loading"></span></th>
 									<td class="name"><span class="string-loading"></span></td>
 									<td class="current_price"><span class="string-loading"></span></td>
 								</tr>

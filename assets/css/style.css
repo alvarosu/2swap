@@ -144,6 +144,8 @@ body {
 @media screen and (max-width: 767px) {
   .site-content {
     margin-left: 0;
+    padding-left: 0;
+    padding-right: 0;
   }
 }
 .site-content .site-content-inner {
@@ -280,8 +282,18 @@ body {
     padding: 15px 20px;
   }
 }
+@media screen and (max-width: 575px) {
+  .table > :not(caption) > * > * {
+    padding: 15px 10px;
+  }
+}
 .table > :not(caption) > * > *:not(:first-child) {
   padding-left: 0;
+}
+@media screen and (max-width: 575px) {
+  .table > :not(caption) > * > *:not(:first-child) {
+    padding-left: 10px;
+  }
 }
 @media screen and (max-width: 1199px) {
   .table th.change.price_30d,
@@ -308,7 +320,7 @@ body {
 @media screen and (min-width: 1200px) {
   .table th.col-name,
 .table td.col-name {
-    width: 50%;
+    width: 40%;
   }
 }
 .table thead {
@@ -337,11 +349,24 @@ body {
   color: rgba(17, 51, 83, 0.6);
   font-weight: normal;
 }
+@media screen and (max-width: 575px) {
+  .table .index {
+    font-size: 10px;
+    display: none;
+  }
+}
 .table .image {
   margin-right: 16px;
   width: 36px;
   height: 36px;
   object-fit: contain;
+}
+@media screen and (max-width: 575px) {
+  .table .image {
+    margin-right: 5px;
+    width: 24px;
+    height: 24px;
+  }
 }
 .table .fa-euro-sign {
   display: inline-flex;
@@ -361,6 +386,17 @@ body {
 }
 @media screen and (max-width: 991px) {
   .table .symbol {
+    display: none;
+  }
+}
+@media screen and (max-width: 575px) {
+  .table .symbol {
+    display: inline-block;
+    margin-left: 0.1em;
+  }
+}
+@media screen and (max-width: 575px) {
+  .table .asset-name {
     display: none;
   }
 }

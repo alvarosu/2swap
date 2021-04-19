@@ -14,12 +14,16 @@
             padding: 15px 20px;
         }
 
-        @media screen and (max-width: 767px) {
-            // padding: 15px 15px;
+        @media screen and (max-width: 575px) {
+            padding: 15px 10px;
         }
 
         &:not(:first-child) {
             padding-left: 0;
+
+            @media screen and (max-width: 575px) {
+                padding-left: 10px;
+            }
         }
     }
 
@@ -60,7 +64,7 @@
 
         &.col-name {
             @media screen and (min-width: 1200px) {
-                width: 50%;
+                width: 40%;
             }
         }
     }
@@ -103,6 +107,11 @@
     .index {
         color: $color-light-soft;
         font-weight: normal;
+
+        @media screen and (max-width: 575px) {
+            font-size: 10px;
+            display: none;
+        }
     }
 
     .image {
@@ -110,6 +119,12 @@
         width: 36px;
         height: 36px;
         object-fit: contain;
+
+        @media screen and (max-width: 575px) {
+            margin-right: 5px;
+            width: 24px;
+            height: 24px;
+        }
     }
 
     .fa-euro-sign {
@@ -130,6 +145,17 @@
         text-transform: uppercase;
 
         @media screen and (max-width: 991px) {
+            display: none;
+        }
+
+        @media screen and (max-width: 575px) {
+            display: inline-block;
+            margin-left: .1em;
+        }
+    }
+
+    .asset-name {
+        @media screen and (max-width: 575px) {
             display: none;
         }
     }

@@ -22,8 +22,7 @@ include('header.php');
 						<?php else: ?>
 						<div class="market-status">
 							<p class="market-status--top">En las últimas 24 horas</p>
-							<p class="market-status--bottom">El mercado está al alza <span
-									class="n-up">4,56%</span></p>
+							<p class="market-status--bottom"><span class="string-loading"></span></p>
 						</div>
 						<?php endif; ?>
 					</div>
@@ -303,18 +302,18 @@ include('header.php');
 					<table class="table table-hover" id="table-prices">
 						<thead>
 							<tr>
-								<th scope="col" width="70">#</th>
-								<th scope="col col-name">Nombre</th>
-								<th scope="col">Precio</th>
-								<th scope="col change price_24h">24 h</th>
-								<th scope="col change price_7d">7 d</th>
-								<th scope="col change price_30d">30 d</th>
-								<th scope="col trade_options"></th>
+								<th class="index">#</th>
+								<th class=" col-name">Nombre</th>
+								<th class="">Precio</th>
+								<th class=" change price_24h"><span class="d-none d-sm-inline">24 h</span></th>
+								<th class=" change price_7d">7 d</th>
+								<th class=" change price_30d">30 d</th>
+								<th class=" trade_options"></th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr class="loading">
-								<th scope="row"><span class="string-loading"></span></th>
+								<th class="index"><span class="string-loading"></span></th>
 								<td class="name"><span class="string-loading"></span></td>
 								<td class="current_price"><span class="string-loading"></span></td>
 								<td class="change price_24h"><span class="string-loading"></span></td>
@@ -323,7 +322,7 @@ include('header.php');
 								<td class="trade_options"><span class="string-loading"></span></td>
 							</tr>
 							<tr class="loading">
-								<th scope="row"><span class="string-loading"></span></th>
+								<th class="index"><span class="string-loading"></span></th>
 								<td class="name"><span class="string-loading"></span></td>
 								<td class="current_price"><span class="string-loading"></span></td>
 								<td class="change price_24h"><span class="string-loading"></span></td>
@@ -332,7 +331,7 @@ include('header.php');
 								<td class="trade_options"><span class="string-loading"></span></td>
 							</tr>
 							<tr class="loading">
-								<th scope="row"><span class="string-loading"></span></th>
+								<th class="index"><span class="string-loading"></span></th>
 								<td class="name"><span class="string-loading"></span></td>
 								<td class="current_price"><span class="string-loading"></span></td>
 								<td class="change price_24h"><span class="string-loading"></span></td>
@@ -341,7 +340,7 @@ include('header.php');
 								<td class="trade_options"><span class="string-loading"></span></td>
 							</tr>
 							<tr class="loading">
-								<th scope="row"><span class="string-loading"></span></th>
+								<th class="index"><span class="string-loading"></span></th>
 								<td class="name"><span class="string-loading"></span></td>
 								<td class="current_price"><span class="string-loading"></span></td>
 								<td class="change price_24h"><span class="string-loading"></span></td>
@@ -350,7 +349,7 @@ include('header.php');
 								<td class="trade_options"><span class="string-loading"></span></td>
 							</tr>
 							<tr class="loading">
-								<th scope="row"><span class="string-loading"></span></th>
+								<th class="index"><span class="string-loading"></span></th>
 								<td class="name"><span class="string-loading"></span></td>
 								<td class="current_price"><span class="string-loading"></span></td>
 								<td class="change price_24h"><span class="string-loading"></span></td>

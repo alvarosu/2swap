@@ -52,6 +52,7 @@ function reqListener() {
 
 	var output = "";
 	var counter = 0;
+	var market_status_array = 0;
 
 	for (var i = 0; i < data.length; i++) {
 		// if (currency_crypto.includes(data[i].id)) {
@@ -60,25 +61,39 @@ function reqListener() {
 		// if (i == 0) console.log(data[i]);
 		// output += data[i].name + ': $' + data[i].market_data.current_price.usd + '<br>';
 		if (currency_fiat_selected == 'usd') {
-			current_price = data[i].market_data.current_price.usd + ' $US';
+			current_price = data[i].market_data.current_price.usd.toFixed(2) + ' $US';
 		} else if (currency_fiat_selected == 'eur') {
-			current_price = data[i].market_data.current_price.eur + ' €';
+			current_price = data[i].market_data.current_price.eur.toFixed(2) + ' €';
 		}
 		price_24h = 'n-up';
 		price_7d = 'n-up';
 		price_30d = 'n-up';
-		if (Math.sign(data[i].market_data.price_change_percentage_24h) == -1) price_24h = 'n-down';
-		price_7d = 'n-up';
+		icon_price_24h = '<span class="d-md-none n-up"><i class="fas fa-sort-up"></i></span>';
+		market_status_array += data[i].market_data.price_change_percentage_24h;
+		if (Math.sign(data[i].market_data.price_change_percentage_24h) == -1) {
+			price_24h = 'n-down';
+			icon_price_24h = '<span class="d-md-none n-down"><i class="fas fa-sort-down"></i></span>';
+		}
 		if (Math.sign(data[i].market_data.price_change_percentage_7d) == -1) price_7d = 'n-down';
-		price_30d = 'n-up';
 		if (Math.sign(data[i].market_data.price_change_percentage_30d) == -1) price_30d = 'n-down';
 
-		output += '<tr data-id="' + data[i].id + '"><th scope="row" class="index">' + counter + '</th><td class="name"><img class="image" src="' + data[i].image.small + '">' + data[i].name + ' <span class="symbol">' + data[i].symbol + '</span></td><td class="current_price">' + current_price + '</td><td class="change price_24h"><span class="' + price_24h + '">' + data[i].market_data.price_change_percentage_24h.toFixed(2) + ' %</span></td><td class="change price_7d"><span class="' + price_7d + '">' + data[i].market_data.price_change_percentage_7d.toFixed(2) + ' %</span></td><td class="change price_30d"><span class="' + price_30d + '">' + data[i].market_data.price_change_percentage_30d.toFixed(2) + ' %</span></td><td class="trade_options text-end"><a href="./trade.php?asset=' + data[i].id + '" class="btn btn-primary btn-asset">Comprar</a></td></tr>';
+		output += '<tr data-id="' + data[i].id + '"><th scope="row" class="index">' + counter + '</th><td class="name"><img class="image" src="' + data[i].image.small + '"><span class="asset-name">' + data[i].name + '</span> <span class="symbol">' + data[i].symbol + '</span></td><td class="current_price">' + current_price + '</td><td class="change price_24h">' + icon_price_24h + '<span class="d-none d-md-inline-block ' + price_24h + '">' + data[i].market_data.price_change_percentage_24h.toFixed(2) + ' %</span></td><td class="change price_7d"><span class="' + price_7d + '">' + data[i].market_data.price_change_percentage_7d.toFixed(2) + ' %</span></td><td class="change price_30d"><span class="' + price_30d + '">' + data[i].market_data.price_change_percentage_30d.toFixed(2) + ' %</span></td><td class="trade_options text-end"><a href="./trade.php?asset=' + data[i].id + '" class="btn btn-primary btn-asset">Comprar</a></td></tr>';
 		// }
 	}
 
-	if (typeof (table_prices) != 'undefined' && table_prices != null)
+	if (typeof (table_prices) != 'undefined' && table_prices != null) {
 		table_prices.querySelector('tbody').innerHTML = output;
+
+		var market_status_string = 'El mercado está al alza';
+		market_status_price24h = 'n-up';
+		if (Math.sign(market_status_array) == -1) {
+			market_status_price24h = 'n-down';
+			market_status_string = 'El mercado está retrocediendo';
+		}
+
+		document.querySelector('.market-status--bottom').innerHTML = market_status_string + ' <span class="d-inline-block ' + market_status_price24h + '">' + market_status_array.toFixed(2) + ' %</span>';
+		
+	}
 
 	// document.querySelector('.loader').classList.add('collapse')
 }
@@ -120,10 +135,10 @@ function reqListenerWallets() {
 					amount_result = amount_result.toFixed(2);
 					// console.log(data[i].id + ' ' + amount_result + ' ' + current_market_price);
 
-					element.querySelector('.name').innerHTML = '<img class="image" src="' + data[i].image.small + '">' + data[i].name + ' <span class="symbol"> ' + data[i].name;
+					element.querySelector('.name').innerHTML = '<img class="image" src="' + data[i].image.small + '"><span class="asset-name">' + data[i].name + '</span> <span class="symbol"> ' + data[i].symbol + '</span>';
 
 					element.querySelector('.current_price').innerHTML = '<strong>' + amount_result + ' €</strong> <span class="asset_amount symbol text-uppercase">' + asset_amount + ' ' + data[i].symbol + '</span>';
-					element.querySelector('.trade_options').innerHTML = '<a href="./trade.php?asset=' + data[i].id + '&type=sell" class="btn btn-primary btn-asset">Vender</a> <a href="./trade.php?asset=' + data[i].id + '" class="btn btn-primary btn-asset">Comprar</a>';
+					element.querySelector('.trade_options').innerHTML = '<a href="./trade.php?asset=' + data[i].id + '&type=sell" class="btn btn-primary btn-asset">Vender</a> <a href="./trade.php?asset=' + data[i].id + '" class="btn btn-primary btn-asset d-none d-md-inline-block">Comprar</a>';
 
 
 				}
