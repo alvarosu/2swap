@@ -11,7 +11,7 @@ session_start();
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 	<title>Precios - 2SWAP</title>
 
 	<link rel="stylesheet" href="./vendor/bootstrap-5.0.0-beta3-dist/css/bootstrap.min.css">
@@ -56,7 +56,7 @@ session_start();
 						// Redirect to user dashboard page
 						header("Location: index.php");
 					} else {
-						echo '<p class="text-danger">Incorrect email/password.</p>';
+						// echo '<p class="text-danger">Datos de acceso incorrectos.</p>';
 					}
 				}
 			?>
@@ -72,33 +72,38 @@ session_start();
 				<div class="row mb-2 g-2">
 					<div class="col-sm">
 						<div class="form-floating">
-							<input type="password" class="form-control" id="login-password" name="login-password" placeholder="Password" required>
-							<label for="login-password">Password</label>
+							<input type="password" class="form-control" id="login-password" name="login-password" placeholder="Contraseña" required>
+							<label for="login-password">Contraseña</label>
 						</div>
 					</div>
 				</div>
 				<div class="checkbox mt-3 mb-4">
 					<label>
-						<input type="checkbox" id="remember_me" name="remember_me" checked/> Remember me
+						<input type="checkbox" id="remember_me" name="remember_me" checked/> Recordarme
 					</label>
 				</div>
 				<button class="w-100 btn btn-primary" type="submit">Acceder</button>
 			</form>
+			<?php
+			if (isset($_POST['login-email'])&&isset($_POST['login-password'])) { 
+				if ($rows == 1) {
+					// $_SESSION['email'] = $email;
+					// Redirect to user dashboard page
+					// header("Location: index.php");
+				} else {
+					echo '<p class="mt-4 mb-0 text-danger">Email o contraseña incorrectos.</p>';
+				}
+			}
+			?>
 		</main>
 		<a href="./signup.php" class="w-100 mt-4 btn btn-link">Crear una cuenta</a>
-
 		<div class="site-footer text-center">
 			<div class="container">
-				<p>© <?php echo date("Y"); ?> - 2SWAP Buy and sell crypto</p>
+				<p>© <?php echo date("Y"); ?> - 2SWAP Buy and Sell Crypto</p>
 			</div>
 		</div>
 		
 	</div>
-
-	<script src="./vendor/jquery-3.6.0.min.js"></script>
-	<script src="./vendor/popper.min.js"></script>
-	<script src="./vendor/bootstrap-5.0.0-beta3-dist/js/bootstrap.min.js"></script>
-	<script src="./assets/js/main.js"></script>
 </body>
 
 </html>

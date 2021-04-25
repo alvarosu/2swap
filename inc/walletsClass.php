@@ -68,7 +68,7 @@ class wallets{
         $consulta = mysqli_query($conexion,$sql);
         if($consulta){
         }else{
-               echo "No se ha podido borrar la wallets<br><br>".mysqli_error($conexion);
+               echo "No se ha podido borrar la fila<br><br>".mysqli_error($conexion);
         }
         $connect->disconnectDB($conexion);
         return $consulta;
@@ -94,8 +94,7 @@ class wallets{
      */
     function getWalletsByUser($fk_user_email) {
         //Creamos la consulta
-        $sql = "SELECT * FROM wallets WHERE fk_user_email = '".$fk_user_email."';";
-        // $sql = "SELECT * FROM wallets WHERE fk_user_email = '".$fk_user_email."' ORDER BY currency;";
+        $sql = "SELECT * FROM wallets WHERE fk_user_email = '".$fk_user_email."' ORDER BY currency <> 'eur', currency ASC;";
         //obtenemos el array
         $tool = new Tools();
         $array = $tool->getArraySQL($sql);

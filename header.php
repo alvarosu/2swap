@@ -5,6 +5,12 @@
 // require('./inc/config.php');
 include("./inc/auth_session.php");
 require_once 'inc/functions.php';
+$users = new users();
+$current_user = $users->get_currentUser();
+if ( !$current_user ) {
+    header("Location: login.php");
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -32,8 +38,6 @@ require_once 'inc/functions.php';
 <body>
 
 	<?php 
-	$users = new users();
-	$current_user = $users->get_currentUser();
 	echo '<input type="hidden" name="currency_fiat_selected" id="currency_fiat_selected" value="'.$current_user['local_currency'].'">';
 	?>
 
@@ -49,7 +53,7 @@ require_once 'inc/functions.php';
 							<img src="./assets/images/2swap-hh.svg" alt="2swap" height="40" class="">
 						</a>
 					</div>
-					<div class="col-auto text-end">
+					<div class="col-auto d-flex text-end">
 						<div class="user-logged d-flex">
 							<a href="./trade.php" class="btn btn-primary d-none d-lg-inline-block">Comprar</a>
 							<a href="./wallet.php" class="btn btn-primary ms-2 d-none d-lg-inline-block">Vender</a>
@@ -62,7 +66,7 @@ require_once 'inc/functions.php';
 								?>
 								<a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle" id="dropdownUser" data-bs-toggle="dropdown" aria-expanded="false">
 									<i class="fas fa-user-circle  me-2"></i>
-									<strong><?php echo $current_urser['name']; ?></strong>
+									<strong class=" d-none d-md-inline"><?php echo $current_urser['name']; ?></strong>
 								</a>
 								<ul class="dropdown-menu" aria-labelledby="dropdownUser">
 									<li class=" d-sm-none"><a href="./deposit.php" class="dropdown-item">Depositar</a></li>
@@ -72,9 +76,33 @@ require_once 'inc/functions.php';
 								<?php endif; ?>
 							</div>
 						</div>
+						<button class="navbar-toggler d-md-none navbar-toggler toggler-example ms-2" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fas fa-bars"></i></button>
 					</div>
 				</div>
 			</div>
+
 		</header>
+
+		<div class="navbar-collapse collapse d-md-none" id="navbarToggleExternalContent">
+			<nav class="site-navigation">
+				<ul class="nav nav-pills flex-column mb-auto">
+					<li class="nav-item mb-3">
+						<a href="./" class="btn nav-link " data-bs-toggle="tooltip" title="Inicio"><span class="icon-circle">
+							<span class="me-3">Inicio</span> <i class="fas fa-home me-2"></i></span>
+						</a>
+					</li>
+					<li class="nav-item mb-3">
+						<a href="./wallet.php" class="btn nav-link " data-bs-toggle="Cartera" title="Cartera"><span class="icon-circle">
+							<span class="me-3">Cartera</span> <i class="fas fa-wallet me-2"></i></span>
+						</a>
+					</li>
+					<li class="nav-item mb-3">
+						<a href="./trade.php" class="btn nav-link " data-bs-toggle="Precios" title="Precios"><span class="icon-circle">
+							<span class="me-3">Precios</span> <i class="fas fa-chart-area me-2"></i></span>
+						</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
 
 		<div class="site-content">

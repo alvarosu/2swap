@@ -72,7 +72,7 @@ class users{
         $consulta = mysqli_query($conexion,$sql);
         if($consulta){
         }else{
-               echo "No se ha podido borrar la users<br><br>".mysqli_error($conexion);
+               echo "No se ha podido borrar la fila<br><br>".mysqli_error($conexion);
         }
         $connect->disconnectDB($conexion);
         return $consulta;

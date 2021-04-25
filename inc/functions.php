@@ -18,4 +18,5 @@ if (DEBUG == "true") {
 require_once("Tools.php");
 require_once("usersClass.php");
 require_once("walletsClass.php");
+require_once("transactionsClass.php");
 ?>

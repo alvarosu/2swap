@@ -7,6 +7,7 @@ include('header.php');
 
 $users = new users();
 $wallets = new wallets();
+$transactions = new transactions();
 $deposit_result = false;
 
 $current_user = $users->get_currentUser();
@@ -22,13 +23,23 @@ if ( !empty($current_user_email) && isset($_REQUEST['deposit-amount']) && isset(
 	$wallet_data = $wallets->getWallet($wallet_id);
 	// var_dump($wallet_data);
 
+	// fromt
+	$fk_wallet_a = $wallet_id;
+	$amount_a = $deposit_amount;
+	// to
+	$fk_wallet_b = '';
+	$amount_b = 0;
+	
+	$create_datetime = date("Y-m-d H:i:s");
+
+	$transactions->create($current_user_email, $fk_wallet_a, $fk_wallet_b, $amount_a, $amount_b, $create_datetime);
+
 	if ( $wallet_data  && $wallet_data['id'] == $wallet_id ) {
 		// Actualizar
 		$deposit_amount = $wallet_data['amount'] + $deposit_amount;
 		$deposit_result = $wallets->update($wallet_id, $deposit_amount);
 	} else {
 		// Crear
-		$create_datetime = date("Y-m-d H:i:s");
 		$deposit_result = $wallets->create($wallet_id, $current_user_email, $deposit_local_currency, $deposit_amount, $create_datetime);
 	}
 
@@ -50,7 +61,7 @@ if ( !empty($current_user_email) && isset($_REQUEST['deposit-amount']) && isset(
 								<div class="row justify-content-between align-items-center mt-5">
 									<div class="col-8">
 										<label for="deposit-amount" class="form-label">Importe</label>
-										<input type="text_money" class="form-control " id="deposit-amount" name="deposit-amount" placeholder="0.00" required>
+										<input type="text_money" class="form-control " id="deposit-amount" name="deposit-amount" pattern="\d*" placeholder="0,00" required>
 									</div>
 									<div class="col-4">
 										<label for="deposit-local_currency" class="form-label">Moneda</label>
@@ -68,6 +79,7 @@ if ( !empty($current_user_email) && isset($_REQUEST['deposit-amount']) && isset(
 								<?php 
 								if ( $deposit_result ) {
 									echo '<div class="alert alert-success mt-4 mb-0 text-center"><strong>Depósito realizado en tu cartera</strong><br> <small>('.$wallet_id.')</small></div>';
+									echo '<a href="./wallet.php" class="btn btn-secondary border-radius w-100 mt-4">Ver mi cartera</a>';
 								} ?>
 							</form>
 						</div>

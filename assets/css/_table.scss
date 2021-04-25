@@ -20,9 +20,13 @@
 
         &:not(:first-child) {
             padding-left: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
 
             @media screen and (max-width: 575px) {
                 padding-left: 10px;
+                max-width: 170px;
             }
         }
     }
@@ -79,11 +83,11 @@
         tbody {
             tr {
                 .btn-asset {
-                    opacity: 0;
+                    // opacity: 0;
                     transition: opacity 120ms ease;
 
                     @media screen and (max-width: 767px) {
-                        opacity: .4;
+                        // opacity: .4;
                     }
                 }
 
@@ -137,6 +141,15 @@
         width: 36px;
         height: 36px;
         color: $primary-color;
+
+        @media screen and (max-width: 575px) {
+            margin-right: 5px;
+            width: 24px;
+            height: 24px;
+            font-size: .6em;
+            padding: 0;
+            margin-right: 12px;
+        }
     }
 
     .symbol {
@@ -151,6 +164,12 @@
         @media screen and (max-width: 575px) {
             display: inline-block;
             margin-left: .1em;
+        }
+
+        &.asset_amount {
+            @media screen and (max-width: 991px) {
+                font-size: .8em;
+            }
         }
     }
 

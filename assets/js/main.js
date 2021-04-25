@@ -30,7 +30,7 @@ function reqListenerTrending() {
 
 	for (var i = 0; i < data_coins.length; i++) {
 		counter++;
-		output += '<tr data-id="' + data_coins[i]['item'].id + '"><th scope="row" class="index">' + counter + '</th><td class="name"><img class="image" src="' + data_coins[i]['item'].thumb + '">' + data_coins[i]['item'].name + ' <span class="symbol">' + data_coins[i]['item'].symbol + '</span></td><td>' + data_coins[i]['item'].market_cap_rank + '</td></tr>';
+		output += '<tr data-id="' + data_coins[i]['item'].id + '"><th scope="row" class="index">' + counter + '</th><td class="name"><img class="image" src="' + data_coins[i]['item'].thumb + '">' + data_coins[i]['item'].name + ' <span class="symbol">' + data_coins[i]['item'].symbol + '</span></td><td class="text-center">' + data_coins[i]['item'].market_cap_rank + '</td></tr>';
 	}
 
 	if (typeof (table_trending) != 'undefined' && table_trending != null)
@@ -61,9 +61,9 @@ function reqListener() {
 		// if (i == 0) console.log(data[i]);
 		// output += data[i].name + ': $' + data[i].market_data.current_price.usd + '<br>';
 		if (currency_fiat_selected == 'usd') {
-			current_price = data[i].market_data.current_price.usd.toFixed(2) + ' $US';
+			current_price = new Intl.NumberFormat('en-EN', { style: 'currency', currency: 'USD' }).format(data[i].market_data.current_price.eur);
 		} else if (currency_fiat_selected == 'eur') {
-			current_price = data[i].market_data.current_price.eur.toFixed(2) + ' €';
+			current_price = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(data[i].market_data.current_price.eur);
 		}
 		price_24h = 'n-up';
 		price_7d = 'n-up';
@@ -86,6 +86,7 @@ function reqListener() {
 
 		var market_status_string = 'El mercado está al alza';
 		market_status_price24h = 'n-up';
+		market_status_array = market_status_array / 50;
 		if (Math.sign(market_status_array) == -1) {
 			market_status_price24h = 'n-down';
 			market_status_string = 'El mercado está retrocediendo';
@@ -131,13 +132,21 @@ function reqListenerWallets() {
 					var amount_result = 0;
 
 					var amount_result = asset_amount * current_market_price;
-					wallet_total += parseFloat(amount_result);
-					amount_result = amount_result.toFixed(2);
+					wallet_total += amount_result;
+					// amount_result = amount_result.toFixed(2);
+					
+					if (currency_fiat_selected == 'usd') {
+						current_price = new Intl.NumberFormat('en-EN', { style: 'currency', currency: 'USD' }).format(amount_result);
+					} else if (currency_fiat_selected == 'eur') {
+						amount_result = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(amount_result);
+					}
 					// console.log(data[i].id + ' ' + amount_result + ' ' + current_market_price);
+
+					asset_amount = parseFloat(asset_amount);
 
 					element.querySelector('.name').innerHTML = '<img class="image" src="' + data[i].image.small + '"><span class="asset-name">' + data[i].name + '</span> <span class="symbol"> ' + data[i].symbol + '</span>';
 
-					element.querySelector('.current_price').innerHTML = '<strong>' + amount_result + ' €</strong> <span class="asset_amount symbol text-uppercase">' + asset_amount + ' ' + data[i].symbol + '</span>';
+					element.querySelector('.current_price').innerHTML = '<strong>' + amount_result + '</strong> <span class="asset_amount symbol text-uppercase">' + asset_amount + ' ' + data[i].symbol + '</span>';
 					element.querySelector('.trade_options').innerHTML = '<a href="./trade.php?asset=' + data[i].id + '&type=sell" class="btn btn-primary btn-asset">Vender</a> <a href="./trade.php?asset=' + data[i].id + '" class="btn btn-primary btn-asset d-none d-md-inline-block">Comprar</a>';
 
 
@@ -145,8 +154,13 @@ function reqListenerWallets() {
 			}
 		}
 	});
-
-	document.querySelector('#wallet-total').innerHTML = wallet_total.toFixed(2) + ' €';
+	
+	if (currency_fiat_selected == 'usd') {
+		wallet_total = new Intl.NumberFormat('en-EN', { style: 'currency', currency: 'USD' }).format(wallet_total);
+	} else if (currency_fiat_selected == 'eur') {
+		wallet_total = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(wallet_total);
+	}
+	document.querySelector('#wallet-total').innerHTML = wallet_total;
 }
 
 var table_userWallets = document.querySelector('#table-user-wallets');
@@ -156,17 +170,35 @@ if (typeof (table_userWallets) != 'undefined' && table_userWallets != null) {
 	oReq.send();
 }
 
+var sell_all_button = document.querySelector('#sell-all-button');
+if (typeof (sell_all_button) != 'undefined' && sell_all_button != null) {
+	sell_all_button.addEventListener('click', function(e) {
+		var trade_amount = document.querySelector('#trade-amount');
+		var trade_assetAmount = document.querySelector('#trade-asset-amount');
+		var current_market_price = document.querySelector('#asset-market_price').value;
+		
+		trade_assetAmount.value = this.getAttribute('data-all');
+
+
+		var amount_result = trade_assetAmount.value * current_market_price;
+		if ( isNaN(amount_result) ) {
+			amount_result = 0;
+			trade_assetAmount.value = 0;
+		}
+		trade_amount.value = parseFloat(amount_result.toFixed(2));
+	});
+}
 
 
 //
-var conversion_to_usd = document.querySelectorAll('.conversion_to_usd');
-conversion_to_usd.forEach(function (e) {
-	if (currency_fiat_selected == "usd") {
-		var amount_usd = e.innerHTML * 1.13;
-		e.innerHTML = 'US$ ' + amount_usd.toFixed(2);
-		e.classList.remove('collapse')
-	}
-});
+// var conversion_to_usd = document.querySelectorAll('.conversion_to_usd');
+// conversion_to_usd.forEach(function (e) {
+// 	if (currency_fiat_selected == "usd") {
+// 		var amount_usd = e.innerHTML * 1.13;
+// 		e.innerHTML = 'US$ ' + amount_usd.toFixed(2);
+// 		e.classList.remove('collapse')
+// 	}
+// });
 
 
 // var table_hover_array = document.querySelectorAll('.table.table-hover');

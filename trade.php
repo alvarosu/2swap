@@ -66,7 +66,10 @@ include('header.php');
 										<div class="row justify-content-between align-items-center mt-4">
 											<div class="col-8">
 												<label for="trade-asset-amount" class="form-label">Cantidad</label>
-												<input type="text_money" class="form-control " id="trade-asset-amount" name="trade-asset-amount" placeholder="0.00" max="<?php echo $wallet_data['amount']; ?>" disabled required>
+												<div class="sell-all">
+													<input type="text_money" class="form-control " id="trade-asset-amount" name="trade-asset-amount" placeholder="0.00" max="<?php echo $wallet_data['amount']; ?>" disabled required>
+													<?php if (!empty($wallet_data['amount'])) : ?><button class="sell-all-button btn btn-link" id="sell-all-button" data-all="<?php echo $wallet_data['amount']; ?>">Todo</button><?php endif; ?>
+												</div>
 											</div>
 											<div class="col-4">
 												<label for="trade-asset-id" class="form-label">Moneda</label>
@@ -100,13 +103,15 @@ include('header.php');
 											// var tb_result = document.querySelector('#table-prices');
 											var data = JSON.parse(this.responseText);
 											var current_market_price = data.market_data.current_price.eur;
+											var current_market_price_front = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(current_market_price);
+
 
 											document.querySelector('#asset-id').value = data.id;
 											document.querySelector('#asset-symbol').value = data.symbol;
 
 											document.querySelector('#asset-market_price').value = current_market_price;
 
-											document.querySelector('#span-asset-market_price').innerHTML = '1 ' + data.symbol + ' = ' + current_market_price + ' €';
+											document.querySelector('#span-asset-market_price').innerHTML = '1 ' + data.symbol + ' = ' + current_market_price_front;
 											// document.querySelector('#span-asset-market_price').innerHTML = output;
 
 											document.querySelector('#trade-asset-id').value = data.symbol;
@@ -133,7 +138,8 @@ include('header.php');
 													assetAmount_result = 0;
 													trade_amount.value = 0;
 												}
-												trade_assetAmount.value = assetAmount_result;
+												// assetAmount_result = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(assetAmount_result);
+												trade_assetAmount.value = parseFloat(assetAmount_result.toFixed(6));
 											});
 
 											trade_assetAmount.addEventListener('keyup', function(e) {
@@ -148,7 +154,8 @@ include('header.php');
 													amount_result = 0;
 													trade_assetAmount.value = 0;
 												}
-												trade_amount.value = amount_result.toFixed(2);
+												// amount_result = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(amount_result);
+												trade_amount.value = parseFloat(amount_result.toFixed(2));
 											});
 										}
 										
@@ -223,13 +230,14 @@ include('header.php');
 											// var tb_result = document.querySelector('#table-prices');
 											var data = JSON.parse(this.responseText);
 											var current_market_price = data.market_data.current_price.eur;
+											var current_market_price_front = new Intl.NumberFormat('es-ES', { style: 'currency', currency: 'EUR' }).format(current_market_price);
 
 											document.querySelector('#asset-id').value = data.id;
 											document.querySelector('#asset-symbol').value = data.symbol;
 
 											document.querySelector('#asset-market_price').value = current_market_price;
 
-											document.querySelector('#span-asset-market_price').innerHTML = '1 ' + data.symbol + ' = ' + current_market_price + ' €';
+											document.querySelector('#span-asset-market_price').innerHTML = '1 ' + data.symbol + ' = ' + current_market_price_front;
 											// document.querySelector('#span-asset-market_price').innerHTML = output;
 
 											document.querySelector('#trade-asset-id').value = data.symbol;
@@ -256,7 +264,7 @@ include('header.php');
 													assetAmount_result = 0;
 													trade_amount.value = 0;
 												}
-												trade_assetAmount.value = assetAmount_result;
+												trade_assetAmount.value = parseFloat(assetAmount_result.toFixed(6));;
 											});
 
 											trade_assetAmount.addEventListener('keyup', function(e) {
@@ -271,7 +279,7 @@ include('header.php');
 													amount_result = 0;
 													trade_assetAmount.value = 0;
 												}
-												trade_amount.value = amount_result.toFixed(2);
+												trade_amount.value = amount_result;
 											});
 										}
 										

@@ -14,6 +14,7 @@ if (isset($_REQUEST['asset-id']) && isset($_REQUEST['asset-vs_currencies']) && i
 	$asset_vs_currencies = $_REQUEST['asset-vs_currencies'];
 	$trade_amount = $_REQUEST['trade-amount'];
 	$trade_asset_amount = $_REQUEST['trade-asset-amount'];
+	// $trade_asset_amount = number_format($_REQUEST['trade-asset-amount'], 6, ',', '.');
 	$trade_type = $_REQUEST['trade-type'];
 
 ?>
@@ -43,6 +44,7 @@ if (isset($_REQUEST['asset-id']) && isset($_REQUEST['asset-vs_currencies']) && i
 
 							$users = new users();
 							$wallets = new wallets();
+							$transactions = new transactions();
 							$deposit_result = false;
 
 							$current_user = $users->get_currentUser();
@@ -64,10 +66,11 @@ if (isset($_REQUEST['asset-id']) && isset($_REQUEST['asset-vs_currencies']) && i
 
 								if ( $hay_fondos ) {
 
-									// Quito trade_asset_amount dela cuenta de fondos
+									// Quito trade_asset_amount de la cuenta de fondos
 									$new_amount = $wallet_fund_data['amount'] - $trade_asset_amount;
 									$deposit_result = $wallets->update($wallet_fund_id, $new_amount);
-								
+
+									$create_datetime = date("Y-m-d H:i:s");
 									
 									$wallet_id = md5( $deposit_local_currency . $current_user_email );
 		
@@ -80,9 +83,18 @@ if (isset($_REQUEST['asset-id']) && isset($_REQUEST['asset-vs_currencies']) && i
 										$deposit_result = $wallets->update($wallet_id, $deposit_amount);
 									} else {
 										// Crear
-										$create_datetime = date("Y-m-d H:i:s");
 										$deposit_result = $wallets->create($wallet_id, $current_user_email, $deposit_local_currency, $deposit_amount, $create_datetime);
 									}
+
+									// fromt
+									$fk_wallet_a = $wallet_fund_id;
+									$amount_a = $trade_asset_amount;
+									// to
+									$fk_wallet_b = $wallet_id;
+									$amount_b = $trade_amount;
+
+									$transactions->create($current_user_email, $fk_wallet_a, $fk_wallet_b, $amount_a, $amount_b, $create_datetime);
+
 									?>
 									<div class="inner-padding">
 										<h4 class="mb-5">Detalles de la operación</h4>
@@ -129,22 +141,35 @@ if (isset($_REQUEST['asset-id']) && isset($_REQUEST['asset-vs_currencies']) && i
 		
 									$wallet_data = $wallets->getWallet($wallet_id);
 									// var_dump($wallet_data);
+									
+									$create_datetime = date("Y-m-d H:i:s");
 		
 									if ( $wallet_data && $wallet_data['id'] == $wallet_id ) {
 										// Actualizar
 										$deposit_amount = $wallet_data['amount'] + $deposit_amount;
 										$deposit_result = $wallets->update($wallet_id, $deposit_amount);
+										
+										// Quito EUR de la cuenta de fondos
+										$new_amount = $wallet_fund_data['amount'] - $trade_amount;
+										$deposit_result = $wallets->update($wallet_fund_id, $new_amount);
 									} else {
 										// Crear
-										$create_datetime = date("Y-m-d H:i:s");
 										$deposit_result = $wallets->create($wallet_id, $current_user_email, $deposit_local_currency, $deposit_amount, $create_datetime);
-									}
-									if ($deposit_result) {
 										
-										// Quito EUR dela cuenta de fondos
+										// Quito EUR de la cuenta de fondos
 										$new_amount = $wallet_fund_data['amount'] - $trade_amount;
 										$deposit_result = $wallets->update($wallet_fund_id, $new_amount);
 									}
+
+									// fromt
+									$fk_wallet_a = $wallet_fund_id;
+									$amount_a = $trade_amount;
+									// to
+									$fk_wallet_b = $wallet_id;
+									$amount_b = $deposit_amount;
+
+									$transactions->create($current_user_email, $fk_wallet_a, $fk_wallet_b, $amount_a, $amount_b, $create_datetime);
+									
 									?>
 									<div class="inner-padding">
 										<h4 class="mb-5">Detalles de la operación</h4>

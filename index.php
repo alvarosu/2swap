@@ -23,22 +23,22 @@ $user_wallets = $wallets->getWalletsByUser($current_user['email']);
 				<div class="col-md-4">
 					<div class="site-content-box">
 						<div class="site-content-box--header"><h5>Saldo de la cartera</h5></div>
-						<div class="inner-padding pt-0">
-							<div class="market-status mb-0">
-								<p class="market-status--bottom mb-0"><big class="wallet-total" id="wallet-total"><span class="string-loading"></span></big></p>
+						<div class="inner-padding pt-0 px-3">
+							<div class="market-status mb-0 p-0">
+								<p class="market-status--bottom text-center mb-0"><big class="wallet-total" id="wallet-total"><span class="string-loading"></span></big></p>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-md-8">
 					<div class="site-content-box">
-						<div class="site-content-box--header"><h5>TOP 7 <i class="fas fa-rocket"></i></span> En Tendencia</h5></div>
+						<div class="site-content-box--header"><h5><i class="fas fa-rocket"></i></span> Trending</h5></div>
 						<table class="table table-hover" id="table-trending">
 							<thead>
 								<tr>
 									<th class="index" width="70">#</th>
 									<th class="col-name">Nombre</th>
-									<th class=""><span class="d-none d-lg-inline">Posición</span> Market Cap.</th>
+									<th class="text-center"><span class="d-none d-lg-inline">Posición</span> Market Cap.</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -99,12 +99,12 @@ $user_wallets = $wallets->getWalletsByUser($current_user['email']);
 							# code...
 							$counter++;
 							$wallet_amount = $el_wallet['amount'];
-							if ( $wallet_amount > 0 ) {
+							if ( $el_wallet['currency'] == 'eur' || $wallet_amount > 0 ) {
 								// $wallet_amount = $wallet_amount;
 								?><tr data-asset-id="<?php echo $el_wallet['currency']; ?>" data-asset-amount="<?php echo $el_wallet['amount']; ?>">
 									<td class="col-name text-capitalize"><span class="name"><?php echo ( $el_wallet['currency'] == 'eur' ) ? '<i class="fas fa-euro-sign"></i>Euro' : '<span class="string-loading"></span>'; ?></span></td>
 									<?php if ( $el_wallet['currency'] == 'eur' ) : ?>
-									<td class="current_price"><strong><?php echo $wallet_amount . ' €'; ?></strong></td>
+									<td class="current_price"><strong><?php echo number_format($wallet_amount, 2, ',', '.')  . ' €'; ?></strong></td>
 									<?php else: ?>
 									<td class="current_price"><span class="string-loading"></span><strong class="conversion_to_eur"></strong> <span class="asset_amount d-none"><?php echo $wallet_amount; ?></span></td>
 									<?php endif; ?>
